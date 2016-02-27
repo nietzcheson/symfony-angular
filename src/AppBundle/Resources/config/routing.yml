@@ -1,0 +1,31 @@
+index:
+    path: /
+    defaults: { _controller:AppBundle:Default:index }
+
+posts:
+    path: /api/posts
+    defaults: { _controller:AppBundle:Posts:index }
+    methods: ['GET']
+    options:
+        expose: true
+
+posts_new:
+    path: /api/posts
+    defaults: { _controller:AppBundle:Posts:new }
+    methods: ['POST']
+    options:
+        expose: true
+
+posts_:
+    path: /api/posts/{id}
+    defaults: { _controller:AppBundle:Posts:oneBy }
+    methods: ['GET']
+    options:
+        expose: true
+
+posts_delete:
+    path: /api/posts/{id}
+    defaults: { _controller:AppBundle:Posts:delete }
+    methods: ['DELETE']
+    options:
+        expose: true

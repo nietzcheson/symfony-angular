@@ -1,0 +1,11 @@
+{
+    "name": "APIRestClient",
+    "version": "1.0.0",
+    "dependencies": {
+        "jquery": "*",
+        "bootstrap": "*",
+        "angularjs": "*",
+        "angular-route": "*",
+        "angular-resource":"*"
+    }
+}
