@@ -22,15 +22,15 @@ class PostsController extends APIRestBaseController
     {
         $em = $this->getDoctrine()->getManager();
         $posts = new Posts();
-
-        $posts->setTitle($request->request->get('posts')['title']);
-        $posts->setSummary($request->request->get('posts')['summary']);
-        $posts->setContent($request->request->get('posts')['content']);
-
-        $em->persist($posts);
-        $em->flush();
-
-        return new Response('Done!');
+        //
+        // $posts->setTitle('Titulo');
+        // $posts->setSummary('Sumario');
+        // $posts->setContent('Contenido');
+        //
+        // $em->persist($posts);
+        // $em->flush();
+        //
+        // return new Response('Done!');
         $postsForm = $this->createForm(PostsType::class, $posts, array('csrf_protection' => false))->handleRequest($request);
 
         if($postsForm->isValid()){

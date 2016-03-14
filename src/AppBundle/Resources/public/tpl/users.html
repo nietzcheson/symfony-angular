@@ -1,1 +1,37 @@
 <h1>{{ title }}</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Website</th>
+            <th>Company</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="user in users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                - {{ user.address.street }} <br />
+                - {{ user.address.suite }} <br />
+                - {{ user.address.city }} <br />
+                - Geo <br />
+                ---- {{ user.address.geo.lat }} <br />
+                ---- {{ user.address.geo.lng }} <br />
+            </td>
+            <td>{{ user.phone }}</td>
+            <td>{{ user.website }}</td>
+            <td>
+                - {{ user.company.name }} <br />
+                - {{ user.company.catchPhrase }} <br />
+                - {{ user.company.bs }} <br />
+            </td>
+        </tr>
+    </tbody>
+</table>

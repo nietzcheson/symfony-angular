@@ -2,47 +2,38 @@
 
 angular.module('myApp', ['ngRoute','ngResource'])
 
-.config(function($routeProvider, $locationProvider){
+.config(function($routeProvider, $locationProvider, $httpProvider){
 
     $routeProvider.when('/posts', {templateUrl: 'bundles/app/tpl/posts.html', controller: 'postsController'});
     $routeProvider.when('/users', {templateUrl: 'bundles/app/tpl/users.html', controller: 'usersController'});
 
-})
-.service('Posts_', function($http){
-    this.posts = function(success){
-        $http.post('/app_dev.php/'+Routing.generate('posts_new')).success(success);
-    }
+    $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+    $httpProvider.defaults.transformRequest.unshift(function (data, headersGetter) {
+
+    return data;
+  });
+
 })
 .factory('Posts', function($resource){
-    return $resource(Routing.generate('posts')+'/:id','');
+    return $resource(Routing.generate('posts')+'/:id',{
+        save: {
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }
+    });
 })
-.controller('postsController', function($scope, Posts, Posts_){
+.factory('Users', function($resource){
+    return $resource('http://jsonplaceholder.typicode.com/users/:user',{user: "@user"});
+})
+.controller('postsController', function($scope, Posts){
     $scope.title = 'Posts';
-
-    // Posts.posts(function(data){
-    //     $scope.posts = data;
-    // });
-
-    var post = Posts.get({ id: 1});
-
-    console.log('/app_dev.php/'+Routing.generate('posts_new'));
 
     $scope.posts = Posts.query();
 
     $scope.save = function(post){
 
-        var record = new Posts();
-
-        //record.posts = ['posts', $scope.post];
-        record.posts = $scope.post;
-
-        Posts.save({'posts': $scope.post});
-
-        // console.log(record.posts);
-        // record.$save(function(response){
-        //     console.log(response);
-        //     $scope.posts.push(post);
-        // });
+        Posts.save($.param({'posts': post}), function(response){
+            $scope.posts = Posts.query();
+        });
 
     };
 
@@ -52,6 +43,12 @@ angular.module('myApp', ['ngRoute','ngResource'])
         })
     };
 })
-.controller('usersController', function($scope){
+.controller('usersController', function($scope, Users){
     $scope.title = 'Users';
+    $scope.users = Users.query();
+
+
+    Users.save({name: 'Cristian Angulo Nova', email: 'cristianangulonova@gmail.com'}, function(data){
+        console.log
+    });
 })
